@@ -1,5 +1,11 @@
+///////// Basic React Imports /////////
 import React from 'react';
 import './App.css';
+
+///////// State Managment (context API) /////////
+
+
+///////// Components /////////
 // import Grid from './components/grid/grid'
 // import Buttons from './components/buttons/buttons'
 // import Rules from './components/rules/rules'
