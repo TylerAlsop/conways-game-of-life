@@ -1,9 +1,9 @@
 ///////// Basic React Imports /////////
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 ///////// State Managment (context API) /////////
-
+import GridContext from './contexts/GridContext'
 
 ///////// Components /////////
 // import Grid from './components/grid/grid'
@@ -11,18 +11,22 @@ import './App.css';
 // import Rules from './components/rules/rules'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1 className="App-title">Conway's Game of Life</h1>
-        <h3>Built by Tyler Alsop</h3>
-        <div className="game-container">
-          {/* <Grid className="grid"></Grid>
-          <Buttons className="buttons"></Buttons> */}
-        </div>
+  const [grid, setGrid] = useState([]);
 
-      </header>
-    </div>
+  return (
+    <GridContext.Provider value={{grid}}>
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">Conway's Game of Life</h1>
+          <h3>Built by Tyler Alsop</h3>
+          <div className="game-container">
+            {/* <Grid className="grid"></Grid>
+            <Buttons className="buttons"></Buttons> */}
+          </div>
+
+        </header>
+      </div>
+    </GridContext.Provider>
   );
 }
 
