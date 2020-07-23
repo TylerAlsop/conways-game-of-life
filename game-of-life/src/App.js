@@ -1,5 +1,7 @@
 ///////// Basic React Imports /////////
 import React, { useState } from 'react';
+import { Route } from "react-router-dom";
+
 import './App.css';
 
 ///////// State Managment (context API) /////////
@@ -8,7 +10,7 @@ import GridContext from './contexts/GridContext'
 ///////// Components /////////
 // import Grid from './components/grid/grid'
 // import Buttons from './components/buttons/buttons'
-// import Rules from './components/rules/rules'
+import Rules from './components/rules/rules'
 
 function App() {
   const [grid, setGrid] = useState([]);
@@ -22,6 +24,9 @@ function App() {
           <div className="game-container">
             {/* <Grid className="grid"></Grid>
             <Buttons className="buttons"></Buttons> */}
+            <Route path="/rules">
+              <Rules />
+            </Route>
           </div>
 
         </header>
