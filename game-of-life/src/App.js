@@ -1,7 +1,7 @@
 ///////// Basic React Imports /////////
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { Route } from "react-router-dom";
-import produce from 'immer';
+import produce, { setAutoFreeze } from 'immer';
 
 import './App.css';
 
@@ -30,6 +30,18 @@ function App() {
 
   console.log(grid)
 
+  const [running, setRunning] = useState(false);
+
+  const referenceRunning = useRef(running);
+  referenceRunning.current = running
+  
+  const startGame = useCallback(() => {
+    if(!referenceRunning) {
+      return
+    }
+
+    setTimeout(startGame, 1000);
+  }, [])
 
   const enlargeGrid = dimensions => {
     console.log("Grid dimensions in enlargeGrid()", dimensions)
@@ -44,42 +56,47 @@ function App() {
           <h3>Built by Tyler Alsop</h3>
         </header>
         <div className="game-container">
-            <Route path="/rules">
-              <Rules />
-            </Route>
-            <div 
-              className="temp-grid-container"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${columnsNumber}, 20px)`
-              }}
-            >
-              {grid.map((rows, i) => 
-                rows.map((column, j) => (
-                  <div 
-                    className="actual-grid"
-                    key = {`${i}-${j}`}
-                    onClick = {() => {
-                      const newGrid = produce(grid, gridCopy => {
-                        gridCopy[i][j] = grid[i][j] ? 0 : 1;
-                      });
-                      setGrid(newGrid);
-                    }}
-                    style={{
-                      width: 20, 
-                      height: 20, 
-                      backgroundColor: grid[i][j] ? "black" : "lightgray", 
-                      border: "solid 1px black"
-                    }}
-                  />
-                ))
-              )}
-
-            </div>
-            {/* <Grid className="grid"></Grid> */}
-            {/* <Buttons className="buttons"></Buttons> */}
+          <Route path="/rules">
+            <Rules />
+          </Route>
+          <button onClick={() => {
+            setRunning(!running)
+          }}>{running ? "STOP" : "START"}</button>
+          <div 
+            className="temp-grid-container"
+            style={{
+              paddingLeft: 700,
+              paddingTop: 50,
+              display: 'grid',
+              gridTemplateColumns: `repeat(${columnsNumber}, 10px)`
+            }}
+          >
+            {grid.map((rows, i) => 
+              rows.map((column, j) => (
+                <div 
+                  className="actual-grid"
+                  key = {`${i}-${j}`}
+                  onClick = {() => {
+                    const newGrid = produce(grid, gridCopy => {
+                      gridCopy[i][j] = grid[i][j] ? 0 : 1;
+                    });
+                    setGrid(newGrid);
+                  }}
+                  style={{
+                    width: 10, 
+                    height: 10, 
+                    backgroundColor: grid[i][j] ? "black" : "lightgray", 
+                    border: "solid 1px black"
+                  }}
+                />
+              ))
+            )}
 
           </div>
+          {/* <Grid className="grid"></Grid> */}
+          {/* <Buttons className="buttons"></Buttons> */}
+
+        </div>
       </div>
     </GridContext.Provider>
   );
