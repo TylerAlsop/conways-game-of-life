@@ -1,6 +1,7 @@
 ///////// Basic React Imports /////////
 import React, { useState } from 'react';
 import { Route } from "react-router-dom";
+import produce from 'immer';
 
 import './App.css';
 
@@ -8,7 +9,7 @@ import './App.css';
 import GridContext from './contexts/GridContext'
 
 ///////// Components /////////
-import Grid from './components/grid/grid'
+// import Grid from './components/grid/grid'
 // import Buttons from './components/buttons/buttons'
 import Rules from './components/rules/rules'
 
@@ -59,12 +60,15 @@ function App() {
                     className="actual-grid"
                     key = {`${i}-${j}`}
                     onClick = {() => {
-                      grid[i][j]
+                      const newGrid = produce(grid, gridCopy => {
+                        gridCopy[i][j] = grid[i][j] ? 0 : 1;
+                      });
+                      setGrid(newGrid);
                     }}
                     style={{
                       width: 20, 
                       height: 20, 
-                      backgroundcolor: grid[i][j] ? "black" : "lightgray", 
+                      backgroundColor: grid[i][j] ? "black" : "lightgray", 
                       border: "solid 1px black"
                     }}
                   />
@@ -72,7 +76,7 @@ function App() {
               )}
 
             </div>
-            <Grid className="grid"></Grid>
+            {/* <Grid className="grid"></Grid> */}
             {/* <Buttons className="buttons"></Buttons> */}
 
           </div>
