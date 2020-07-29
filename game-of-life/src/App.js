@@ -18,6 +18,16 @@ import Rules from './components/rules/rules'
 const rowsNumber = 50;
 const columnsNumber = 50;
 
+const adjacentCellCoordinates = [
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+];
 
 function App() {
   const [grid, setGrid] = useState(() => {
@@ -32,13 +42,38 @@ function App() {
 
   const [running, setRunning] = useState(false);
 
-  const referenceRunning = useRef(running);
-  referenceRunning.current = running
+  const runningReference = useRef(running);
+  runningReference.current = running
   
   const startGame = useCallback(() => {
-    if(!referenceRunning) {
-      return
+    if(!runningReference.current) {
+      return;
     }
+    //////// Game Rules in Action ////////
+    setGrid((currentGridValue) => {
+      return produce(currentGridValue, gridCopy => {
+        for (let i = 0; i < rowsNumber; i++) {
+          for (let j = 0; j < columnsNumber; j++) {
+            let adjacentCells = 0;
+            adjacentCellCoordinates.forEach(([x, y]) => {
+              const newI = i + x;
+              const newJ = j + y;
+              if (newI >= 0 && newI < rowsNumber && newJ >= 0 && newJ < columnsNumber) {
+                adjacentCells += currentGridValue[newI][newJ]
+              }
+            })
+
+            if (adjacentCells < 2 || adjacentCells > 3) {
+              gridCopy[i][j] = 0;
+            } else if (currentGridValue[i][j] === 0 && adjacentCells === 3) {
+              gridCopy[i][j] = 1;
+            }
+          
+          }
+        }
+      })
+    });
+
 
     setTimeout(startGame, 1000);
   }, [])
@@ -60,7 +95,12 @@ function App() {
             <Rules />
           </Route>
           <button onClick={() => {
-            setRunning(!running)
+            setRunning(!running);
+            if (!running) {
+              runningReference.current = true;
+              startGame();
+            }
+
           }}>{running ? "STOP" : "START"}</button>
           <div 
             className="temp-grid-container"
