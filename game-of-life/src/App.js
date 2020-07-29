@@ -29,13 +29,17 @@ const adjacentCellCoordinates = [
   [1, 1],
 ];
 
+const emptyGrid = () => {
+  const rows = [];
+  for (let i = 0; i < rowsNumber; i++) {
+    rows.push(Array.from(Array(columnsNumber), () => 0))
+  };
+  return rows;
+}
+
 function App() {
   const [grid, setGrid] = useState(() => {
-    const rows = [];
-    for (let i = 0; i < rowsNumber; i++) {
-      rows.push(Array.from(Array(columnsNumber), () => 0))
-    }
-    return rows
+    return emptyGrid()
   });
 
   console.log(grid)
@@ -75,7 +79,7 @@ function App() {
     });
 
 
-    setTimeout(startGame, 1000);
+    setTimeout(startGame, 100);
   }, [])
 
   const enlargeGrid = dimensions => {
@@ -101,7 +105,28 @@ function App() {
               startGame();
             }
 
-          }}>{running ? "STOP" : "START"}</button>
+          }}>
+            {running ? "STOP" : "START"}
+          </button>
+          <button 
+            className="randomize-button" 
+            onClick={() => {
+              const rows = [];
+              for (let i = 0; i < rowsNumber; i++){
+                rows.push(Array.from(Array(columnsNumber), () => Math.random() > 0.8 ? 1 : 0));
+              };
+            
+              setGrid(rows)
+            }} >
+            RANDOMIZE GRID
+          </button>
+          <button 
+            className="clear-button" 
+            onClick={() => {
+              setGrid(emptyGrid());
+            }} >
+            CLEAR GRID
+          </button>
           <div 
             className="temp-grid-container"
             style={{
