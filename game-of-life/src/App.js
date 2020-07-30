@@ -15,8 +15,9 @@ import Rules from './components/rules/rules'
 
 
 
-const rowsNumber = 50;
-const columnsNumber = 50;
+let rowsNumber = 50;
+let columnsNumber = 50;
+let speed = 1000;
 
 const adjacentCellCoordinates = [
   [-1, -1],
@@ -72,7 +73,6 @@ function App() {
             } else if (currentGridValue[i][j] === 0 && adjacentCells === 3) {
               gridCopy[i][j] = 1;
             }
-          
           }
         }
       })
@@ -127,6 +127,21 @@ function App() {
             }} >
             CLEAR GRID
           </button>
+          <button className="25-25-Grid" onClick={() => {
+            rowsNumber = 25;
+            columnsNumber = 25;
+            setGrid(emptyGrid())
+          }}>25 X 25 GRID</button>
+          <button className="50-50-Grid" onClick={() => {
+            rowsNumber = 50;
+            columnsNumber = 50;
+            setGrid(emptyGrid())
+          }}>50 X 50 GRID</button>
+          <button className="50-50-Grid" onClick={() => {
+            rowsNumber = 100;
+            columnsNumber = 100;
+            setGrid(emptyGrid())
+          }}>100 X 100 GRID</button>
           <div 
             className="temp-grid-container"
             style={{
