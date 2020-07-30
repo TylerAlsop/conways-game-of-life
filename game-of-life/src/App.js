@@ -79,7 +79,7 @@ function App() {
     });
 
 
-    setTimeout(startGame, 100);
+    setTimeout(startGame, speed);
   }, [])
 
   const enlargeGrid = dimensions => {
@@ -127,21 +127,39 @@ function App() {
             }} >
             CLEAR GRID
           </button>
-          <button className="25-25-Grid" onClick={() => {
+          <button className="25-25-grid" onClick={() => {
             rowsNumber = 25;
             columnsNumber = 25;
             setGrid(emptyGrid())
           }}>25 X 25 GRID</button>
-          <button className="50-50-Grid" onClick={() => {
+          <button className="50-50-grid" onClick={() => {
             rowsNumber = 50;
             columnsNumber = 50;
             setGrid(emptyGrid())
           }}>50 X 50 GRID</button>
-          <button className="50-50-Grid" onClick={() => {
+          <button className="100-100-grid" onClick={() => {
             rowsNumber = 100;
             columnsNumber = 100;
             setGrid(emptyGrid())
           }}>100 X 100 GRID</button>
+          <button className="default-speed" onClick={() => {
+            speed = 1000;
+          }}>DEFAULT SPEED</button>
+          <button className="speed-2" onClick={() => {
+            speed = 500;
+          }}>SPEED X 2</button>
+          <button className="speed-4" onClick={() => {
+            speed = 250;
+          }}>SPEED X 4</button>
+          <button className="speed-10" onClick={() => {
+            speed = 100;
+          }}>SPEED X 10</button>
+          <button className="speed-20" onClick={() => {
+            speed = 50;
+          }}>SPEED X 20</button>
+          <button className="speed-100" onClick={() => {
+            speed = 10;
+          }}>SPEED X 100</button>
           <div 
             className="temp-grid-container"
             style={{
