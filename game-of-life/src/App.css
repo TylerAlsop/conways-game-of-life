@@ -69,3 +69,20 @@
 h4 {
   margin-top: 0px;
 }
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 300px;
+}
+
+/* .grid-container {
+  padding-left: 400;
+  padding-top: 50;
+} */
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 40px;
+}
