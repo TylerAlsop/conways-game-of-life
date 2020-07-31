@@ -18,6 +18,7 @@ import Rules from './components/rules/rules'
 let rowsNumber = 50;
 let columnsNumber = 50;
 let speed = 1000;
+let generation = 0;
 
 const adjacentCellCoordinates = [
   [-1, -1],
@@ -56,6 +57,8 @@ function App() {
     }
     //////// Game Rules in Action ////////
     setGrid((currentGridValue) => {
+      generation += 1;
+
       return produce(currentGridValue, gridCopy => {
         for (let i = 0; i < rowsNumber; i++) {
           for (let j = 0; j < columnsNumber; j++) {
@@ -78,7 +81,6 @@ function App() {
       })
     });
 
-
     setTimeout(startGame, speed);
   }, [])
 
@@ -98,68 +100,73 @@ function App() {
           <Route path="/rules">
             <Rules />
           </Route>
-          <button onClick={() => {
-            setRunning(!running);
-            if (!running) {
-              runningReference.current = true;
-              startGame();
-            }
+          <div className="buttons-container">
+            <button onClick={() => {
+              setRunning(!running);
+              if (!running) {
+                runningReference.current = true;
+                startGame();
+              }
 
-          }}>
-            {running ? "STOP" : "START"}
-          </button>
-          <button 
-            className="randomize-button" 
-            onClick={() => {
-              const rows = [];
-              for (let i = 0; i < rowsNumber; i++){
-                rows.push(Array.from(Array(columnsNumber), () => Math.random() > 0.8 ? 1 : 0));
-              };
-            
-              setGrid(rows)
-            }} >
-            RANDOMIZE GRID
-          </button>
-          <button 
-            className="clear-button" 
-            onClick={() => {
-              setGrid(emptyGrid());
-            }} >
-            CLEAR GRID
-          </button>
-          <button className="25-25-grid" onClick={() => {
-            rowsNumber = 25;
-            columnsNumber = 25;
-            setGrid(emptyGrid())
-          }}>25 X 25 GRID</button>
-          <button className="50-50-grid" onClick={() => {
-            rowsNumber = 50;
-            columnsNumber = 50;
-            setGrid(emptyGrid())
-          }}>50 X 50 GRID</button>
-          <button className="100-100-grid" onClick={() => {
-            rowsNumber = 100;
-            columnsNumber = 100;
-            setGrid(emptyGrid())
-          }}>100 X 100 GRID</button>
-          <button className="default-speed" onClick={() => {
-            speed = 1000;
-          }}>DEFAULT SPEED</button>
-          <button className="speed-2" onClick={() => {
-            speed = 500;
-          }}>SPEED X 2</button>
-          <button className="speed-4" onClick={() => {
-            speed = 250;
-          }}>SPEED X 4</button>
-          <button className="speed-10" onClick={() => {
-            speed = 100;
-          }}>SPEED X 10</button>
-          <button className="speed-20" onClick={() => {
-            speed = 50;
-          }}>SPEED X 20</button>
-          <button className="speed-100" onClick={() => {
-            speed = 10;
-          }}>SPEED X 100</button>
+            }}>
+              {running ? "STOP" : "START"}
+            </button>
+            <button 
+              className="randomize-button" 
+              onClick={() => {
+                const rows = [];
+                for (let i = 0; i < rowsNumber; i++){
+                  rows.push(Array.from(Array(columnsNumber), () => Math.random() > 0.8 ? 1 : 0));
+                };
+              
+                setGrid(rows)
+              }} >
+              RANDOMIZE GRID
+            </button>
+            <button 
+              className="clear-button" 
+              onClick={() => {
+                generation = 0;
+                setGrid(emptyGrid());
+              }} >
+              CLEAR GRID
+            </button>
+            <button className="25-25-grid" onClick={() => {
+              rowsNumber = 25;
+              columnsNumber = 25;
+              setGrid(emptyGrid())
+            }}>25 X 25 GRID</button>
+            <button className="50-50-grid" onClick={() => {
+              rowsNumber = 50;
+              columnsNumber = 50;
+              setGrid(emptyGrid())
+            }}>50 X 50 GRID</button>
+            <button className="100-100-grid" onClick={() => {
+              rowsNumber = 100;
+              columnsNumber = 100;
+              setGrid(emptyGrid())
+            }}>100 X 100 GRID</button>
+            <button className="default-speed" onClick={() => {
+              speed = 1000;
+            }}>DEFAULT SPEED</button>
+            <button className="speed-2" onClick={() => {
+              speed = 500;
+            }}>SPEED X 2</button>
+            <button className="speed-4" onClick={() => {
+              speed = 250;
+            }}>SPEED X 4</button>
+            <button className="speed-10" onClick={() => {
+              speed = 100;
+            }}>SPEED X 10</button>
+            <button className="speed-20" onClick={() => {
+              speed = 50;
+            }}>SPEED X 20</button>
+            <button className="speed-100" onClick={() => {
+              speed = 10;
+            }}>SPEED X 100</button>
+          </div>
+          <h3>Generation: {generation}</h3>
+
           <div 
             className="temp-grid-container"
             style={{
