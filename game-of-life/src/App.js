@@ -60,8 +60,6 @@ function App() {
     }
     //////// Game Rules in Action ////////
     setGrid((currentGridValue) => {
-      generation += 1;
-
       return produce(currentGridValue, gridCopy => {
         for (let i = 0; i < rowsNumber; i++) {
           for (let j = 0; j < columnsNumber; j++) {
@@ -81,6 +79,8 @@ function App() {
             }
           }
         }
+      generation += 1;
+
       })
     });
 
@@ -99,9 +99,6 @@ function App() {
         <div className="game-container" style={{
           margin: '0 auto',
         }}>
-          <Route path="/rules">
-            <Rules />
-          </Route>
           <div 
             className="grid-container"
             style={{
@@ -219,6 +216,8 @@ function App() {
 
         </div>
       </div>
+      <Rules />
+
     </GameContext.Provider>
   );
 }
