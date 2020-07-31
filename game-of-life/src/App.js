@@ -175,6 +175,9 @@ function App() {
                   className="actual-grid"
                   key = {`${i}-${j}`}
                   onClick = {() => {
+                    if (running){
+                      return
+                    }
                     const newGrid = produce(grid, gridCopy => {
                       gridCopy[i][j] = grid[i][j] ? 0 : 1;
                     });
