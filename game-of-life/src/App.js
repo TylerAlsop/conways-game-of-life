@@ -1,6 +1,5 @@
 ///////// Basic React Imports /////////
 import React, { useState, useCallback, useRef } from 'react';
-import { Route } from "react-router-dom";
 import produce, { setAutoFreeze } from 'immer';
 
 import './App.css';
@@ -9,18 +8,17 @@ import './App.css';
 import GameContext from './contexts/GameContext'
 
 ///////// Components /////////
-// import Grid from './components/grid/grid'
-// import Buttons from './components/buttons/buttons'
 import Rules from './components/rules/rules'
-// import ControlButtons from './components/buttons/controlButtons';
 
 
-
+///////// Game Variables /////////
   let rowsNumber = 50;
   let columnsNumber = 50;
   let speed = 1000;
   let generation = 0;
 
+
+///////// Coordinates To Find Cells Adjacent To Any Given Cell /////////
 const adjacentCellCoordinates = [
   [-1, -1],
   [-1, 0],
@@ -32,6 +30,8 @@ const adjacentCellCoordinates = [
   [1, 1],
 ];
 
+
+///////// Create An Empty Grid /////////
 const emptyGrid = () => {
   const rows = [];
   for (let i = 0; i < rowsNumber; i++) {
@@ -40,6 +40,8 @@ const emptyGrid = () => {
   return rows;
 }
 
+
+///////// The App Itself /////////
 function App() {
   const [grid, setGrid] = useState(() => {
     return emptyGrid()
@@ -51,9 +53,8 @@ function App() {
   const runningReference = useRef(running);
   runningReference.current = running
 
-  // const [rowsNumber, setRowsNumber] = useState(50)
-
   
+///////// Function That Starts The Simulation /////////
   const startGame = useCallback(() => {
     if(!runningReference.current) {
       return;
@@ -88,6 +89,7 @@ function App() {
   }, [])
 
 
+///////// JSX Being Returned For Rendering /////////
   return (
     <GameContext.Provider value={{grid}}>
       <div className="App">
