@@ -134,7 +134,6 @@ function App() {
 
           </div>
           <div className="buttons-container">
-            {/* <ControlButtons></ControlButtons> */}
             <div className="control-buttons">
               <h3>Controls:</h3>
               <button
@@ -212,14 +211,9 @@ function App() {
               </div>
             </div>
           </div>
-
-          {/* <Grid className="grid"></Grid> */}
-          {/* <Buttons className="buttons"></Buttons> */}
-
         </div>
       </div>
       <Rules />
-
     </GameContext.Provider>
   );
 }
