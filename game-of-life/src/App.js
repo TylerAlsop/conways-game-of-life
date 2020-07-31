@@ -6,19 +6,20 @@ import produce, { setAutoFreeze } from 'immer';
 import './App.css';
 
 ///////// State Managment (context API) /////////
-import GridContext from './contexts/GridContext'
+import GameContext from './contexts/GameContext'
 
 ///////// Components /////////
 // import Grid from './components/grid/grid'
 // import Buttons from './components/buttons/buttons'
 import Rules from './components/rules/rules'
+// import ControlButtons from './components/buttons/controlButtons';
 
 
 
-let rowsNumber = 50;
-let columnsNumber = 50;
-let speed = 1000;
-let generation = 0;
+  let rowsNumber = 50;
+  let columnsNumber = 50;
+  let speed = 1000;
+  let generation = 0;
 
 const adjacentCellCoordinates = [
   [-1, -1],
@@ -43,13 +44,15 @@ function App() {
   const [grid, setGrid] = useState(() => {
     return emptyGrid()
   });
-
   console.log(grid)
 
   const [running, setRunning] = useState(false);
 
   const runningReference = useRef(running);
   runningReference.current = running
+
+  // const [rowsNumber, setRowsNumber] = useState(50)
+
   
   const startGame = useCallback(() => {
     if(!runningReference.current) {
@@ -57,8 +60,6 @@ function App() {
     }
     //////// Game Rules in Action ////////
     setGrid((currentGridValue) => {
-      generation += 1;
-
       return produce(currentGridValue, gridCopy => {
         for (let i = 0; i < rowsNumber; i++) {
           for (let j = 0; j < columnsNumber; j++) {
@@ -78,100 +79,29 @@ function App() {
             }
           }
         }
+      generation += 1;
+
       })
     });
 
     setTimeout(startGame, speed);
   }, [])
 
-  const enlargeGrid = dimensions => {
-    console.log("Grid dimensions in enlargeGrid()", dimensions)
-    setGrid([...grid, dimensions])
-  }
 
   return (
-    <GridContext.Provider value={{grid, enlargeGrid}}>
+    <GameContext.Provider value={{grid}}>
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Conway's Game of Life</h1>
           <h3>Built by Tyler Alsop</h3>
         </header>
-        <div className="game-container">
-          <Route path="/rules">
-            <Rules />
-          </Route>
-          <div className="buttons-container">
-            <button onClick={() => {
-              setRunning(!running);
-              if (!running) {
-                runningReference.current = true;
-                startGame();
-              }
-
-            }}>
-              {running ? "STOP" : "START"}
-            </button>
-            <button 
-              className="randomize-button" 
-              onClick={() => {
-                const rows = [];
-                for (let i = 0; i < rowsNumber; i++){
-                  rows.push(Array.from(Array(columnsNumber), () => Math.random() > 0.8 ? 1 : 0));
-                };
-              
-                setGrid(rows)
-              }} >
-              RANDOMIZE GRID
-            </button>
-            <button 
-              className="clear-button" 
-              onClick={() => {
-                generation = 0;
-                setGrid(emptyGrid());
-              }} >
-              CLEAR GRID
-            </button>
-            <button className="25-25-grid" onClick={() => {
-              rowsNumber = 25;
-              columnsNumber = 25;
-              setGrid(emptyGrid())
-            }}>25 X 25 GRID</button>
-            <button className="50-50-grid" onClick={() => {
-              rowsNumber = 50;
-              columnsNumber = 50;
-              setGrid(emptyGrid())
-            }}>50 X 50 GRID</button>
-            <button className="100-100-grid" onClick={() => {
-              rowsNumber = 100;
-              columnsNumber = 100;
-              setGrid(emptyGrid())
-            }}>100 X 100 GRID</button>
-            <button className="default-speed" onClick={() => {
-              speed = 1000;
-            }}>DEFAULT SPEED</button>
-            <button className="speed-2" onClick={() => {
-              speed = 500;
-            }}>SPEED X 2</button>
-            <button className="speed-4" onClick={() => {
-              speed = 250;
-            }}>SPEED X 4</button>
-            <button className="speed-10" onClick={() => {
-              speed = 100;
-            }}>SPEED X 10</button>
-            <button className="speed-20" onClick={() => {
-              speed = 50;
-            }}>SPEED X 20</button>
-            <button className="speed-100" onClick={() => {
-              speed = 10;
-            }}>SPEED X 100</button>
-          </div>
-          <h3>Generation: {generation}</h3>
-
+        <h2>Generation: {generation}</h2>
+        <div className="game-container" style={{
+          margin: '0 auto',
+        }}>
           <div 
-            className="temp-grid-container"
+            className="grid-container"
             style={{
-              paddingLeft: 700,
-              paddingTop: 50,
               display: 'grid',
               gridTemplateColumns: `repeat(${columnsNumber}, 10px)`
             }}
@@ -201,12 +131,94 @@ function App() {
             )}
 
           </div>
+          <div className="buttons-container">
+            {/* <ControlButtons></ControlButtons> */}
+            <div className="control-buttons">
+              <h3>Controls:</h3>
+              <button
+                  className="start-stop" 
+                  onClick={() => {
+                      setRunning(!running);
+                      if (!running) {
+                          runningReference.current = true;
+                          startGame();
+                      }
+                  }}
+              >
+                {running ? "STOP" : "START"}
+              </button>
+              <button 
+                className="randomize-button" 
+                onClick={() => {
+                  const rows = [];
+                  for (let i = 0; i < rowsNumber; i++){
+                    rows.push(Array.from(Array(columnsNumber), () => Math.random() > 0.8 ? 1 : 0));
+                  };
+                
+                  setGrid(rows)
+                }} >
+                RANDOMIZE GRID
+              </button>
+              <button 
+                className="clear-button" 
+                onClick={() => {
+                  generation = 0;
+                  setGrid(emptyGrid());
+                }} >
+                CLEAR GRID
+              </button>
+            </div>
+            <div className="adjust-buttons">
+              <div className="grid-size-buttons">
+                <h3>Choose Grid Size:</h3>
+                <button className="25-25-grid" onClick={() => {
+                  rowsNumber = 25;
+                  columnsNumber = 25;
+                  setGrid(emptyGrid())
+                }}>25 X 25 GRID</button>
+                <button className="50-50-grid" onClick={() => {
+                  rowsNumber = 50;
+                  columnsNumber = 50;
+                  setGrid(emptyGrid())
+                }}>50 X 50 GRID</button>
+                <button className="100-100-grid" onClick={() => {
+                  rowsNumber = 100;
+                  columnsNumber = 100;
+                  setGrid(emptyGrid())
+                }}>100 X 100 GRID</button>
+              </div>
+              <div className="speed-buttons">
+                <h3>Choose Speed:</h3>
+                <button className="default-speed" onClick={() => {
+                  speed = 1000;
+                }}>DEFAULT SPEED</button>
+                <button className="speed-2" onClick={() => {
+                  speed = 500;
+                }}>SPEED X 2</button>
+                <button className="speed-4" onClick={() => {
+                  speed = 250;
+                }}>SPEED X 4</button>
+                <button className="speed-10" onClick={() => {
+                  speed = 100;
+                }}>SPEED X 10</button>
+                <button className="speed-20" onClick={() => {
+                  speed = 50;
+                }}>SPEED X 20</button>
+                <button className="speed-100" onClick={() => {
+                  speed = 10;
+                }}>SPEED X 100</button>
+              </div>
+            </div>
+          </div>
+
           {/* <Grid className="grid"></Grid> */}
           {/* <Buttons className="buttons"></Buttons> */}
 
         </div>
       </div>
-    </GridContext.Provider>
+      <Rules />
+
+    </GameContext.Provider>
   );
 }
 

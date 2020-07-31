@@ -69,3 +69,38 @@
 h4 {
   margin-top: 0px;
 }
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 300px;
+}
+
+.grid-area {
+  display: flex;
+  flex-direction: column;
+}
+
+/* .grid-container {
+  padding-left: 400;
+  padding-top: 50;
+} */
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 40px;
+}
+
+.rules-container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  max-width: 50vw;
+  min-width: 500px;
+  margin: auto;
+  text-align: left;
+}
+
+.rules-page-title {
+  text-align: center;
+}
