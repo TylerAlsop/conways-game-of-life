@@ -24,7 +24,7 @@ b. For a dead square:
 
 Rules for Playing
 1. Choose Your Board Size
-a. The default size of the grid is 50 X 50, but may chose the size of grid you want to play on by clicking on one of the following buttons and the grid will automatically change to the size of your choosing:
+-The default size of the grid is 50 X 50, but may chose the size of grid you want to play on by clicking on one of the following buttons and the grid will automatically change to the size of your choosing:
 25 X 25 GRID
 50 X 50 GRID
 100 X 100 GRID
