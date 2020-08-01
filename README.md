@@ -14,29 +14,29 @@
 What will happen on the next generation of the grid?
 
 - a. For a live square:
- -  If 2-3 squares around it are alive then the square will remain alive.
- -  If less than 2 squares around it are alive then the square will die from underpopulation.
- -  If more than 3 squares around it are alive then the square will die from underpopulation.
+     - If 2-3 squares around it are alive then the square will remain alive.
+     - If less than 2 squares around it are alive then the square will die from underpopulation.
+     - If more than 3 squares around it are alive then the square will die from underpopulation.
 
 b. For a dead square:
- -  If there are exactly 3 squares around it that are alive then the square will come to life.
- -  If there are greater or less than 3 then the square will remain dead.
+     - If there are exactly 3 squares around it that are alive then the square will come to life.
+     - If there are greater or less than 3 then the square will remain dead.
 
 ### Rules for Playing
 1. Choose Your Board Size
 - The default size of the grid is 50 X 50, but may chose the size of grid you want to play on by clicking on one of the following buttons and the grid will automatically change to the size of your choosing:
- - 25 X 25 GRID
- - 50 X 50 GRID
- - 100 X 100 GRID
+     - 25 X 25 GRID
+     - 50 X 50 GRID
+     - 100 X 100 GRID
 
 2. Choose Your Speed
 - a. The default speed is one second per generation, but you can choose the speed at which the game moves on to the next generation. The options are as follows:
- - DEFAULT SPEED
- - SPEED X 2
- - SPEED X 4
- - SPEED X 10
- - SPEED X 20
- - SPEED X 100
+     - DEFAULT SPEED
+     - SPEED X 2
+     - SPEED X 4
+     - SPEED X 10
+     - SPEED X 20
+     - SPEED X 100
 
 
 3. Setup Your Board
