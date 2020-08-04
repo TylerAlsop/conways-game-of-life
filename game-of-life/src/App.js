@@ -165,10 +165,12 @@ function App() {
                 onClick={() => {
                   generation = 0;
                   setGrid(emptyGrid());
+                    if (running) {
                       setRunning(!running);
-                      if (!running) {
-                          runningReference.current = true;
-                      }
+                    }
+                    if (!running) {
+                      runningReference.current = true;
+                    }
                 }} >
                 CLEAR GRID
               </button>
