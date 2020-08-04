@@ -1,6 +1,6 @@
 ///////// Basic React Imports /////////
 import React, { useState, useCallback, useRef } from 'react';
-import produce, { setAutoFreeze } from 'immer';
+import produce from 'immer';
 
 import './App.css';
 
